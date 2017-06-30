@@ -1,4 +1,4 @@
-package com.test.mysql.entity;
+package com.test.entity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -6,6 +6,10 @@ import java.util.Date;
 @Entity
 @Table(name = "persistent_logins")
 public class PersistentLogins implements java.io.Serializable{
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "series", length = 64, nullable = false)
     private String series;

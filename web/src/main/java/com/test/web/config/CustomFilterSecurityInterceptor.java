@@ -11,13 +11,14 @@ import javax.servlet.*;
 import java.io.IOException;
 
 public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
-    private static final Logger logger = Logger.getLogger(CustomFilterSecurityInterceptor.class);
+    
+    private static final Logger                    logger = Logger.getLogger(CustomFilterSecurityInterceptor.class);
     private FilterInvocationSecurityMetadataSource securityMetadataSource;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         FilterInvocation fi = new FilterInvocation(request, response, chain);
-        logger.debug("===="+fi.getRequestUrl());
+        logger.debug("====" + fi.getRequestUrl());
         invoke(fi);
     }
 
@@ -46,8 +47,7 @@ public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor
         return this.securityMetadataSource;
     }
 
-    public void setSecurityMetadataSource(
-            FilterInvocationSecurityMetadataSource smSource) {
+    public void setSecurityMetadataSource(FilterInvocationSecurityMetadataSource smSource) {
         this.securityMetadataSource = smSource;
     }
 

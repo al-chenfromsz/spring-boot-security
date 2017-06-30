@@ -1,33 +1,36 @@
-package com.test.mysql.test;
-
-import com.test.mysql.entity.Department;
-import com.test.mysql.entity.Role;
-import com.test.mysql.entity.User;
-import com.test.mysql.repository.DepartmentRepository;
-import com.test.mysql.repository.RoleRepository;
-import com.test.mysql.repository.UserRepository;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.util.Assert;
+package com.test;
 
 import java.util.Date;
 import java.util.List;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {JpaConfiguration.class})
-public class MysqlTest {
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.Assert;
+
+import com.test.entity.Department;
+import com.test.entity.Role;
+import com.test.entity.User;
+import com.test.repository.DepartmentRepository;
+import com.test.repository.RoleRepository;
+import com.test.repository.UserRepository;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class MySqlApplicationTests {
     @Autowired
     UserRepository userRepository;
+    
     @Autowired
     DepartmentRepository departmentRepository;
+    
     @Autowired
     RoleRepository roleRepository;
-
+    
     @Before
     public void initData(){
         userRepository.deleteAll();
@@ -37,12 +40,12 @@ public class MysqlTest {
         Department department = new Department();
         department.setName("开发部");
         departmentRepository.save(department);
-        Assert.notNull(department.getId());
+        Assert.notNull(department.getId(),null);
 
         Role role = new Role();
         role.setName("admin");
         roleRepository.save(role);
-        Assert.notNull(role.getId());
+        Assert.notNull(role.getId(),null);
 
         User user = new User();
         user.setName("user");
@@ -51,16 +54,16 @@ public class MysqlTest {
         user.setCreatedate(new Date());
         user.setDepartment(department);
         userRepository.save(user);
-        Assert.notNull(user.getId());
+        Assert.notNull(user.getId(),null);
     }
 
     @Test
     public void insertUserRoles(){
         User user = userRepository.findByName("user");
-        Assert.notNull(user);
+        Assert.notNull(user,null);
 
         List<Role> roles = roleRepository.findAll();
-        Assert.notNull(roles);
+        Assert.notNull(roles,null);
         user.setRoles(roles);
         userRepository.save(user);
     }
