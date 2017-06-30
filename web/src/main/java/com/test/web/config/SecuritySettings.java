@@ -2,11 +2,11 @@ package com.test.web.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix="securityconfig")
+@ConfigurationProperties(prefix = "securityconfig")
 public class SecuritySettings {
     private String logoutsuccssurl = "/logout";
-    private String permitall = "/api";
-    private String deniedpage = "/deny";
+    private String permitall       = "/api";
+    private String deniedpage      = "/deny";
     private String urlroles;
 
     public String getLogoutsuccssurl() {

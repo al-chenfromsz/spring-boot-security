@@ -22,21 +22,21 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/role")
 public class RoleController {
-    private static Logger logger = LoggerFactory.getLogger(RoleController.class);
+    private static Logger  logger = LoggerFactory.getLogger(RoleController.class);
 
     @Autowired
     private RoleRepository roleRepository;
 
     @RequestMapping("/index")
-    public String index(ModelMap model, Principal user) throws Exception{
+    public String index(ModelMap model, Principal user) throws Exception {
         model.addAttribute("user", user);
         return "role/index";
     }
 
-    @RequestMapping(value="/{id}")
-    public String show(ModelMap model,@PathVariable Long id) {
+    @RequestMapping(value = "/{id}")
+    public String show(ModelMap model, @PathVariable Long id) {
         Role role = roleRepository.findOne(id);
-        model.addAttribute("role",role);
+        model.addAttribute("role", role);
         return "role/show";
     }
 
@@ -45,46 +45,46 @@ public class RoleController {
     public Page<Role> getList(RoleQo roleQo) {
         try {
             Pageable pageable = new PageRequest(roleQo.getPage(), roleQo.getSize(), new Sort(Sort.Direction.ASC, "id"));
-            return roleRepository.findByName(roleQo.getName()==null?"%":"%"+roleQo.getName()+"%", pageable);
-        }catch (Exception e){
+            return roleRepository.findByName(roleQo.getName() == null ? "%" : "%" + roleQo.getName() + "%", pageable);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
     @RequestMapping("/new")
-    public String create(){
+    public String create() {
         return "role/new";
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public String save(Role role) throws Exception{
+    public String save(Role role) throws Exception {
         roleRepository.save(role);
-        logger.info("新增->ID="+role.getId());
+        logger.info("新增->ID=" + role.getId());
         return "1";
     }
 
-    @RequestMapping(value="/edit/{id}")
-    public String update(ModelMap model,@PathVariable Long id){
+    @RequestMapping(value = "/edit/{id}")
+    public String update(ModelMap model, @PathVariable Long id) {
         Role role = roleRepository.findOne(id);
-        model.addAttribute("role",role);
+        model.addAttribute("role", role);
         return "role/edit";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value="/update")
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
     @ResponseBody
-    public String update(Role role) throws Exception{
+    public String update(Role role) throws Exception {
         roleRepository.save(role);
-        logger.info("修改->ID="+role.getId());
+        logger.info("修改->ID=" + role.getId());
         return "1";
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public String delete(@PathVariable Long id) throws Exception{
+    public String delete(@PathVariable Long id) throws Exception {
         roleRepository.delete(id);
-        logger.info("删除->ID="+id);
+        logger.info("删除->ID=" + id);
         return "1";
     }
 

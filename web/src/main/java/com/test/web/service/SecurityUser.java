@@ -10,13 +10,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class SecurityUser extends User implements UserDetails
-{
+public class SecurityUser extends User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
+
     public SecurityUser(User user) {
-        if(user != null)
-        {
+        if (user != null) {
             this.setId(user.getId());
             this.setName(user.getName());
             this.setEmail(user.getEmail());
@@ -31,8 +30,7 @@ public class SecurityUser extends User implements UserDetails
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         List<Role> roles = this.getRoles();
-        if(roles != null)
-        {
+        if (roles != null) {
             for (Role role : roles) {
                 SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
                 authorities.add(authority);

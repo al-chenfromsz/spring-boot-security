@@ -1,11 +1,13 @@
 package com.test.web.config;
 
-import com.test.web.service.CustomUserDetailsService;
-import com.test.web.service.LoginSuccessHandler;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.sql.DataSource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -19,27 +21,30 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 
-import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.List;
+import com.test.web.service.CustomUserDetailsService;
+import com.test.web.service.LoginSuccessHandler;
 
 @Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 @EnableConfigurationProperties(SecuritySettings.class)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    protected Log log = LogFactory.getLog(getClass());
+    
+    protected Log                    log = LogFactory.getLog(getClass());
+    
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManager    authenticationManager;
+    
     @Autowired
-    private SecuritySettings settings;
+    private SecuritySettings         settings;
+    
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
-    @Autowired @Qualifier("dataSource")
-    private DataSource dataSource;
+    
+    @Autowired
+    private DataSource               dataSource;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
         //remember me
         auth.eraseCredentials(false);
@@ -47,16 +52,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().loginPage("/login").permitAll().successHandler(loginSuccessHandler())
-                .and().authorizeRequests()
-                .antMatchers("/images/**", "/checkcode", "/scripts/**", "/styles/**").permitAll()
-                .antMatchers(settings.getPermitall().split(",")).permitAll()
-                .anyRequest().authenticated()
-                .and().csrf().requireCsrfProtectionMatcher(csrfSecurityRequestMatcher())
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
-                .and().logout().logoutSuccessUrl(settings.getLogoutsuccssurl())
-                .and().exceptionHandling().accessDeniedPage(settings.getDeniedpage())
-                .and().rememberMe().tokenValiditySeconds(86400).tokenRepository(tokenRepository());
+        http.formLogin().loginPage("/login").permitAll().successHandler(loginSuccessHandler()).and().authorizeRequests()
+                .antMatchers("/images/**", "/checkcode", "/scripts/**", "/styles/**").permitAll().antMatchers(settings.getPermitall().split(",")).permitAll()
+                .anyRequest().authenticated().and().csrf().requireCsrfProtectionMatcher(csrfSecurityRequestMatcher()).and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.NEVER).and().logout().logoutSuccessUrl(settings.getLogoutsuccssurl()).and().exceptionHandling()
+                .accessDeniedPage(settings.getDeniedpage()).and().rememberMe().tokenValiditySeconds(86400).tokenRepository(tokenRepository());
     }
 
     @Bean
@@ -65,19 +65,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JdbcTokenRepositoryImpl tokenRepository(){
+    public JdbcTokenRepositoryImpl tokenRepository() {
         JdbcTokenRepositoryImpl jtr = new JdbcTokenRepositoryImpl();
         jtr.setDataSource(dataSource);
         return jtr;
     }
 
     @Bean
-    public LoginSuccessHandler loginSuccessHandler(){
+    public LoginSuccessHandler loginSuccessHandler() {
         return new LoginSuccessHandler();
     }
 
     @Bean
-    public CustomFilterSecurityInterceptor customFilter() throws Exception{
+    public CustomFilterSecurityInterceptor customFilter() throws Exception {
         CustomFilterSecurityInterceptor customFilter = new CustomFilterSecurityInterceptor();
         customFilter.setSecurityMetadataSource(securityMetadataSource());
         customFilter.setAccessDecisionManager(accessDecisionManager());
@@ -95,8 +95,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new CustomSecurityMetadataSource(settings.getUrlroles());
     }
 
-
-    private CsrfSecurityRequestMatcher csrfSecurityRequestMatcher(){
+    private CsrfSecurityRequestMatcher csrfSecurityRequestMatcher() {
         CsrfSecurityRequestMatcher csrfSecurityRequestMatcher = new CsrfSecurityRequestMatcher();
         List<String> list = new ArrayList<String>();
         list.add("/rest/");

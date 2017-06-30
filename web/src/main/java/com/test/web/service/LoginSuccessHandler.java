@@ -16,15 +16,15 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-            throws IOException,ServletException {
-        User userDetails = (User)authentication.getPrincipal();
+            throws IOException, ServletException {
+        User userDetails = (User) authentication.getPrincipal();
 
-        log.info("登录用户user:" + userDetails.getName() + "login"+request.getContextPath());
+        log.info("登录用户user:" + userDetails.getName() + "login" + request.getContextPath());
         log.info("IP:" + getIpAddress(request));
         super.onAuthenticationSuccess(request, response, authentication);
     }
 
-    public String getIpAddress(HttpServletRequest request){
+    public String getIpAddress(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");

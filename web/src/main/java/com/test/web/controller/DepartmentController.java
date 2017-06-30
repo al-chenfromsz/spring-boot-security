@@ -22,21 +22,21 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/department")
 public class DepartmentController {
-    private static Logger logger = LoggerFactory.getLogger(DepartmentController.class);
+    private static Logger        logger = LoggerFactory.getLogger(DepartmentController.class);
 
     @Autowired
     private DepartmentRepository departmentRepository;
 
     @RequestMapping("/index")
-    public String index(ModelMap model, Principal user) throws Exception{
+    public String index(ModelMap model, Principal user) throws Exception {
         model.addAttribute("user", user);
         return "department/index";
     }
 
-    @RequestMapping(value="/{id}")
-    public String show(ModelMap model,@PathVariable Long id) {
+    @RequestMapping(value = "/{id}")
+    public String show(ModelMap model, @PathVariable Long id) {
         Department department = departmentRepository.findOne(id);
-        model.addAttribute("department",department);
+        model.addAttribute("department", department);
         return "department/show";
     }
 
@@ -45,46 +45,46 @@ public class DepartmentController {
     public Page<Department> getList(DepartmentQo departmentQo) {
         try {
             Pageable pageable = new PageRequest(departmentQo.getPage(), departmentQo.getSize(), new Sort(Sort.Direction.ASC, "id"));
-            return departmentRepository.findByName(departmentQo.getName()==null?"%":"%"+departmentQo.getName()+"%", pageable);
-        }catch (Exception e){
+            return departmentRepository.findByName(departmentQo.getName() == null ? "%" : "%" + departmentQo.getName() + "%", pageable);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
     @RequestMapping("/new")
-    public String create(){
+    public String create() {
         return "department/new";
     }
 
-    @RequestMapping(value="/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public String save(Department department) throws Exception{
+    public String save(Department department) throws Exception {
         departmentRepository.save(department);
-        logger.info("新增->ID="+department.getId());
+        logger.info("新增->ID=" + department.getId());
         return "1";
     }
 
-    @RequestMapping(value="/edit/{id}")
-    public String update(ModelMap model,@PathVariable Long id){
+    @RequestMapping(value = "/edit/{id}")
+    public String update(ModelMap model, @PathVariable Long id) {
         Department department = departmentRepository.findOne(id);
-        model.addAttribute("department",department);
+        model.addAttribute("department", department);
         return "department/edit";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value="/update")
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
     @ResponseBody
-    public String update(Department department) throws Exception{
+    public String update(Department department) throws Exception {
         departmentRepository.save(department);
-        logger.info("修改->ID="+department.getId());
+        logger.info("修改->ID=" + department.getId());
         return "1";
     }
 
-    @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public String delete(@PathVariable Long id) throws Exception{
+    public String delete(@PathVariable Long id) throws Exception {
         departmentRepository.delete(id);
-        logger.info("删除->ID="+id);
+        logger.info("删除->ID=" + id);
         return "1";
     }
 
