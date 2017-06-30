@@ -1,10 +1,11 @@
 package com.test.web.service;
 
-import com.test.mysql.entity.Role;
-import com.test.mysql.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.test.entity.Role;
+import com.test.entity.User;
 
 import java.util.ArrayList;
 import java.util.Collection;

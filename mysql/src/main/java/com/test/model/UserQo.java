@@ -1,4 +1,4 @@
-package com.test.mysql.model;
+package com.test.model;
 
 
 import org.springframework.format.annotation.DateTimeFormat;

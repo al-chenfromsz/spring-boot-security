@@ -1,4 +1,4 @@
-package com.test.mysql.model;
+package com.test.model;
 
 public class DepartmentQo extends PageQo{
     private Long id;

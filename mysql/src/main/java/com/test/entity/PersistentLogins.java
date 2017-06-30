@@ -1,4 +1,4 @@
-package com.test.mysql.entity;
+package com.test.entity;
 
 import javax.persistence.*;
 import java.util.Date;

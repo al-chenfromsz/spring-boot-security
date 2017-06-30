@@ -1,4 +1,4 @@
-package com.test.mysql.model;
+package com.test.model;
 
 public class PageQo {
     private Integer page = 0;

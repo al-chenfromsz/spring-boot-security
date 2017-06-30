@@ -1,3 +1,4 @@
+package com.test.config;
 //package com.test.mysql.config;
 //
 //import org.springframework.boot.autoconfigure.domain.EntityScan;

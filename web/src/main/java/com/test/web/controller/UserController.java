@@ -1,12 +1,5 @@
 package com.test.web.controller;
 
-import com.test.mysql.entity.Department;
-import com.test.mysql.entity.Role;
-import com.test.mysql.entity.User;
-import com.test.mysql.model.UserQo;
-import com.test.mysql.repository.DepartmentRepository;
-import com.test.mysql.repository.RoleRepository;
-import com.test.mysql.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +18,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.test.entity.Department;
+import com.test.entity.Role;
+import com.test.entity.User;
+import com.test.model.UserQo;
+import com.test.repository.DepartmentRepository;
+import com.test.repository.RoleRepository;
+import com.test.repository.UserRepository;
 
 import java.security.Principal;
 import java.util.*;

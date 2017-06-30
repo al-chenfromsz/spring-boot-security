@@ -1,4 +1,4 @@
-package com.test.mysql;
+package com.test;
 
 import java.util.Date;
 import java.util.List;
@@ -12,12 +12,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
-import com.test.mysql.entity.Department;
-import com.test.mysql.entity.Role;
-import com.test.mysql.entity.User;
-import com.test.mysql.repository.DepartmentRepository;
-import com.test.mysql.repository.RoleRepository;
-import com.test.mysql.repository.UserRepository;
+import com.test.entity.Department;
+import com.test.entity.Role;
+import com.test.entity.User;
+import com.test.repository.DepartmentRepository;
+import com.test.repository.RoleRepository;
+import com.test.repository.UserRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
