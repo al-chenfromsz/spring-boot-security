@@ -52,11 +52,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().loginPage("/login").permitAll().successHandler(loginSuccessHandler()).and().authorizeRequests()
-                .antMatchers("/images/**", "/checkcode", "/scripts/**", "/styles/**").permitAll().antMatchers(settings.getPermitall().split(",")).permitAll()
-                .anyRequest().authenticated().and().csrf().requireCsrfProtectionMatcher(csrfSecurityRequestMatcher()).and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.NEVER).and().logout().logoutSuccessUrl(settings.getLogoutsuccssurl()).and().exceptionHandling()
-                .accessDeniedPage(settings.getDeniedpage()).and().rememberMe().tokenValiditySeconds(86400).tokenRepository(tokenRepository());
+        http.authorizeRequests()
+                .antMatchers("/images/**", "/checkcode", "/scripts/**", "/styles/**").permitAll()
+                .antMatchers(settings.getPermitall().split(",")).permitAll()
+                .anyRequest().authenticated()
+            .and()
+                .formLogin().loginPage("/login").permitAll()
+                    .successHandler(loginSuccessHandler())
+            .and()
+                .logout()
+                    .logoutSuccessUrl(settings.getLogoutsuccssurl())
+            .and()
+                .exceptionHandling()
+                    .accessDeniedPage(settings.getDeniedpage())
+            .and()
+                .csrf()
+                    .requireCsrfProtectionMatcher(csrfSecurityRequestMatcher())
+            .and()
+                .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.NEVER)
+            .and()
+                .rememberMe().tokenValiditySeconds(86400).tokenRepository(tokenRepository());
     }
 
     @Bean
