@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 import com.test.entity.Department;
 
-//@Repository
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
+    
     @Query("select t from Department t where t.name like :name")
     Page<Department> findByName(@Param("name") String name, Pageable pageRequest);
 }

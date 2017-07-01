@@ -22,17 +22,18 @@ import com.test.repository.UserRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MySqlApplicationTests {
+
     @Autowired
-    UserRepository userRepository;
-    
+    UserRepository       userRepository;
+
     @Autowired
     DepartmentRepository departmentRepository;
-    
+
     @Autowired
-    RoleRepository roleRepository;
-    
+    RoleRepository       roleRepository;
+
     @Before
-    public void initData(){
+    public void initData() {
         userRepository.deleteAll();
         roleRepository.deleteAll();
         departmentRepository.deleteAll();
@@ -40,30 +41,32 @@ public class MySqlApplicationTests {
         Department department = new Department();
         department.setName("开发部");
         departmentRepository.save(department);
-        Assert.notNull(department.getId(),null);
+        Assert.notNull(department.getId(), null);
 
         Role role = new Role();
         role.setName("admin");
         roleRepository.save(role);
-        Assert.notNull(role.getId(),null);
+        Assert.notNull(role.getId(), null);
 
         User user = new User();
         user.setName("user");
         BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
         user.setPassword(bpe.encode("user"));
         user.setCreatedate(new Date());
+        user.setSex(1);
+        user.setEmail("qwfys200@qq.com");
         user.setDepartment(department);
         userRepository.save(user);
-        Assert.notNull(user.getId(),null);
+        Assert.notNull(user.getId(), null);
     }
 
     @Test
-    public void insertUserRoles(){
+    public void insertUserRoles() {
         User user = userRepository.findByName("user");
-        Assert.notNull(user,null);
+        Assert.notNull(user, null);
 
         List<Role> roles = roleRepository.findAll();
-        Assert.notNull(roles,null);
+        Assert.notNull(roles, null);
         user.setRoles(roles);
         userRepository.save(user);
     }

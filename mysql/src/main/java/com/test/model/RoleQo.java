@@ -1,7 +1,7 @@
 package com.test.model;
 
-public class RoleQo extends PageQo{
-    private Long id;
+public class RoleQo extends PageQo {
+    private Long   id;
     private String name;
 
     public RoleQo() {

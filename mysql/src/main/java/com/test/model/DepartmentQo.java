@@ -1,7 +1,7 @@
 package com.test.model;
 
-public class DepartmentQo extends PageQo{
-    private Long id;
+public class DepartmentQo extends PageQo {
+    private Long   id;
     private String name;
 
     public DepartmentQo() {

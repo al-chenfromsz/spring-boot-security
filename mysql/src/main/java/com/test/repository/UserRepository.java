@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 import com.test.entity.User;
 
-//@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    
     @Query("select t from User t where t.name =?1 and t.email =?2")
     User findByNameAndEmail(String name, String email);
 

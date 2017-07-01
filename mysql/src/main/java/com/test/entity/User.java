@@ -1,39 +1,54 @@
 package com.test.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "user")
-public class User implements java.io.Serializable{
+public class User implements java.io.Serializable {
     /*
      * 
      */
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private String email;
-    private Integer sex;
+    private Long              id;
+
+    private String            name;
+
+    private String            email;
+
+    private Integer           sex;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createdate;
-    private String password;
+    private Date              createdate       = new Date();
+
+    private String            password;
 
     @ManyToOne
     @JoinColumn(name = "did")
+
     @JsonBackReference
-    private Department department;
+    private Department        department;
 
     @ManyToMany(cascade = {}, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "roles_id")})
-    private List<Role> roles;
+    @JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "roles_id") })
+    private List<Role>        roles;
 
     public User() {
     }

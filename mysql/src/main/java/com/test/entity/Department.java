@@ -7,17 +7,20 @@ import java.util.Date;
 
 @Entity
 @Table(name = "department")
-public class Department implements java.io.Serializable{
-    /**
-     * 
+public class Department implements java.io.Serializable {
+    /*
+     * serialVersionUID
      */
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
+    private Long              id;
+
+    private String            name;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createdate;
+    private Date              createdate       = new Date();
 
     public Department() {
     }

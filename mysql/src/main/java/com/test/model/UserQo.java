@@ -1,22 +1,26 @@
 package com.test.model;
 
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class UserQo extends PageQo{
-    private Long id;
-    private String name;
-    private String email;
+public class UserQo extends PageQo {
+    private Long    id;
+
+    private String  name;
+
+    private String  email;
+
     private Integer sex;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date createdate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date createdateStart;
+    private Date    createdate;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date createdateEnd;
+    private Date    createdateStart;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date    createdateEnd;
 
     public UserQo() {
     }
