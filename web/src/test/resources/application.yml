@@ -1,6 +1,3 @@
-server:
-  tomcat:
-    uri-encoding: UTF-8
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/security?characterEncoding=utf8&useSSL=false
@@ -10,7 +7,7 @@ spring:
     database: MYSQL
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
@@ -19,4 +16,4 @@ securityconfig:
   logoutsuccssurl: /
   permitall: /rest/**,/bbs**
   deniedpage: /deny
-  urlroles: /**/new/** = admin; /**/edit/** = admin,editor; /**/delete/** = admin
+  urlroles: /**/new/** = admin; /**/edit/** = admin,editor; /**/delete/** = admi

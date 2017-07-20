@@ -1,5 +1,11 @@
 package com.test.web.config;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -7,8 +13,6 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
-
-import java.util.*;
 
 public class CustomSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
     private static final Logger                      logger      = Logger.getLogger(CustomSecurityMetadataSource.class);
@@ -61,8 +65,9 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
 
         logger.debug("request url is  " + url);
 
-        if (resourceMap == null)
+        if (resourceMap == null) {
             resourceMap = loadResourceMatchAuthority();
+        }
 
         Iterator<String> ite = resourceMap.keySet().iterator();
         while (ite.hasNext()) {
@@ -74,6 +79,7 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
         return resourceMap.get(url);
     }
 
+    @Override
     public boolean supports(Class<?> clazz) {
         return true;
     }

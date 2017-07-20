@@ -49,9 +49,9 @@ public class MySqlApplicationTests {
         Assert.notNull(role.getId(), null);
 
         User user = new User();
-        user.setName("user");
+        user.setName("lwk");
         BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
-        user.setPassword(bpe.encode("user"));
+        user.setPassword(bpe.encode("123456"));
         user.setCreatedate(new Date());
         user.setSex(1);
         user.setEmail("qwfys200@qq.com");
@@ -62,7 +62,7 @@ public class MySqlApplicationTests {
 
     @Test
     public void insertUserRoles() {
-        User user = userRepository.findByName("user");
+        User user = userRepository.findByName("lwk");
         Assert.notNull(user, null);
 
         List<Role> roles = roleRepository.findAll();
